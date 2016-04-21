@@ -26,27 +26,27 @@ $app->get('/', function(){
     echo 'Home - My Slim Application';
 });
 
-// Get all cars
-$app->get('/cars', function() use($app, $db){
-    $cars = array();
-    foreach ($db->cars() as $car) {
-        $cars[]  = array(
-            'id' => $car['id'],
-            'year' => $car['year'],
-            'make' => $car['make'],
-            'model' => $car['model'],
-            'linkimg' => $car['img']
+// Get all bikes
+$app->get('/bikes', function() use($app, $db){
+    $bikes = array();
+    foreach ($db->bikes() as $bike) {
+        $bikes[]  = array(
+            'id' => $bike['id'],
+            'year' => $bike['year'],
+            'make' => $bike['make'],
+            'model' => $bike['model'],
+            'linkimg' => $bike['img']
         );
     }
     $app->response()->header("Content-Type", "application/json");
-    echo json_encode($cars, JSON_FORCE_OBJECT);
+    echo json_encode($bikes, JSON_FORCE_OBJECT);
 });
 
-// Get a single car
-$app->get('/car/:id', function($id) use ($app, $db) {
+// Get a single bike
+$app->get('/bike/:id', function($id) use ($app, $db) {
     $app->response()->header("Content-Type", "application/json");
-    $car = $db->cars()->where('id', $id);
-    if($data = $car->fetch()){
+    $bike = $db->bikes()->where('id', $id);
+    if($data = $bike->fetch()){
         echo json_encode(array(
             'id' => $data['id'],
             'year' => $data['year'],
@@ -58,54 +58,54 @@ $app->get('/car/:id', function($id) use ($app, $db) {
     else{
         echo json_encode(array(
             'status' => false,
-            'message' => "Car ID $id does not exist"
+            'message' => "bike ID $id does not exist"
         ));
     }
 });
 
-// Add a new car
-$app->post('/car', function() use($app, $db){
+// Add a new bike
+$app->post('/bike', function() use($app, $db){
     $app->response()->header("Content-Type", "application/json");
-    $car = $app->request()->post();
-    $result = $db->cars->insert($car);
+    $bike = $app->request()->post();
+    $result = $db->bikes->insert($bike);
     echo json_encode(array('id' => $result['id']));
 });
 
-// Update a car
-$app->put('/car/:id', function($id) use($app, $db){
+// Update a bike
+$app->put('/bike/:id', function($id) use($app, $db){
     $app->response()->header("Content-Type", "application/json");
-    $car = $db->cars()->where("id", $id);
-    if ($car->fetch()) {
+    $bike = $db->bikes()->where("id", $id);
+    if ($bike->fetch()) {
         $post = $app->request()->put();
-        $result = $car->update($post);
+        $result = $bike->update($post);
         echo json_encode(array(
             "status" => (bool)$result,
-            "message" => "Car updated successfully"
+            "message" => "bike updated successfully"
             ));
     }
     else{
         echo json_encode(array(
             "status" => false,
-            "message" => "Car id $id does not exist"
+            "message" => "bike id $id does not exist"
         ));
     }
 });
 
-// Remove a car
-$app->delete('/car/:id', function($id) use($app, $db){
+// Remove a bike
+$app->delete('/bike/:id', function($id) use($app, $db){
     $app->response()->header("Content-Type", "application/json");
-    $car = $db->cars()->where('id', $id);
-    if($car->fetch()){
-        $result = $car->delete();
+    $bike = $db->bikes()->where('id', $id);
+    if($bike->fetch()){
+        $result = $bike->delete();
         echo json_encode(array(
             "status" => true,
-            "message" => "Car deleted successfully"
+            "message" => "bike deleted successfully"
         ));
     }
     else{
         echo json_encode(array(
             "status" => false,
-            "message" => "Car id $id does not exist"
+            "message" => "bike id $id does not exist"
         ));
     }
 });
