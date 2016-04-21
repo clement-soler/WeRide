@@ -29,7 +29,7 @@ $app->get('/', function(){
 // Get all bikes
 $app->get('/bikes', function() use($app, $db){
     $bikes = array();
-    foreach ($db->bikes() as $bike) {
+    foreach ($db->vehicles() as $bike) {
         $bikes[]  = array(
             'id' => $bike['id'],
             'year' => $bike['year'],
@@ -45,7 +45,7 @@ $app->get('/bikes', function() use($app, $db){
 // Get a single bike
 $app->get('/bike/:id', function($id) use ($app, $db) {
     $app->response()->header("Content-Type", "application/json");
-    $bike = $db->bikes()->where('id', $id);
+    $bike = $db->vehicles()->where('id', $id);
     if($data = $bike->fetch()){
         echo json_encode(array(
             'id' => $data['id'],
@@ -67,14 +67,14 @@ $app->get('/bike/:id', function($id) use ($app, $db) {
 $app->post('/bike', function() use($app, $db){
     $app->response()->header("Content-Type", "application/json");
     $bike = $app->request()->post();
-    $result = $db->bikes->insert($bike);
+    $result = $db->vehicles->insert($bike);
     echo json_encode(array('id' => $result['id']));
 });
 
 // Update a bike
 $app->put('/bike/:id', function($id) use($app, $db){
     $app->response()->header("Content-Type", "application/json");
-    $bike = $db->bikes()->where("id", $id);
+    $bike = $db->vehicles()->where("id", $id);
     if ($bike->fetch()) {
         $post = $app->request()->put();
         $result = $bike->update($post);
@@ -94,7 +94,7 @@ $app->put('/bike/:id', function($id) use($app, $db){
 // Remove a bike
 $app->delete('/bike/:id', function($id) use($app, $db){
     $app->response()->header("Content-Type", "application/json");
-    $bike = $db->bikes()->where('id', $id);
+    $bike = $db->vehicles()->where('id', $id);
     if($bike->fetch()){
         $result = $bike->delete();
         echo json_encode(array(
