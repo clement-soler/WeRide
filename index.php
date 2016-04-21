@@ -23,7 +23,7 @@ $db = new NotORM($pdo);
 
 // Home route
 $app->get('/', function(){
-    echo 'Home - My Slim Application';
+    echo 'Welcome - WeRide API';
 });
 
 // Get all bikes
