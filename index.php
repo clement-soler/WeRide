@@ -42,6 +42,34 @@ $app->get('/bikes', function() use($app, $db){
     echo json_encode($bikes, JSON_FORCE_OBJECT);
 });
 
+// Get a category bike
+$app->get('/bikes/:type', function($type) use($app, $db){
+    $bikes = array();
+    $data = $db->vehicles()->where('type', $type);
+    foreach ($data as $bike) {
+        $bikes[]  = array(
+            'id' => $bike['id'],
+            'year' => $bike['year'],
+            'make' => $bike['make'],
+            'model' => $bike['model'],
+            'linkimg' => $bike['img'],
+            'about' => $bike['about'],
+            'type' => $bike['type'],
+            'date' => $bike['date']
+        );
+    }
+    if(!empty($bikes)){
+        $app->response()->header("Content-Type", "application/json");
+        echo json_encode($bikes, JSON_FORCE_OBJECT);
+    }     
+    else{
+        echo json_encode(array(
+            'status' => false,
+            'message' => "$type is not a bike category"
+        ));
+    }   
+});
+
 // Get a single bike
 $app->get('/bike/:id', function($id) use ($app, $db) {
     $app->response()->header("Content-Type", "application/json");
