@@ -35,7 +35,10 @@ $app->get('/bikes', function() use($app, $db){
             'year' => $bike['year'],
             'make' => $bike['make'],
             'model' => $bike['model'],
-            'linkimg' => $bike['img']
+            'linkimg' => $bike['img'],
+            'about' => $bike['about'],
+            'type' => $bike['type'],
+            'date' => $bike['date']
         );
     }
     $app->response()->header("Content-Type", "application/json");
@@ -80,7 +83,10 @@ $app->get('/bike/:id', function($id) use ($app, $db) {
             'year' => $data['year'],
             'make' => $data['make'],
             'model' => $data['model'],
-            'linkimg' => $data['img']
+            'linkimg' => $data['img'],
+            'about' => $data['about'],
+            'type' => $data['type'],
+            'date' => $data['date']
         ));
     }
     else{
