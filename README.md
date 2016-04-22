@@ -1,6 +1,6 @@
 # WeRide-ServerSide
 
-###### A RESTful APIs using Slim (PHP)
+###### A RESTful APIs using [Slim](https://github.com/slimphp/Slim) (PHP) + [NotORM](https://github.com/vrana/notorm)
 *** 
 
 
